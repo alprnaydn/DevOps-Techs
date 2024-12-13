@@ -73,7 +73,7 @@ services:
       - elk
     depends_on:
       - elasticsearch
-  # Filebeat servisi
+
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.17.0
     container_name: filebeat
@@ -142,7 +142,7 @@ input {
 }
 
 filter {
-  # Burada, gelen logları işleyebilirsiniz
+
 }
 
 output {
