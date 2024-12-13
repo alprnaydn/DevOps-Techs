@@ -1,14 +1,18 @@
-********* ELK-Stack Kurulumu ************
+# ELK-Stack Kurulumu
 
-# Prequests: 
-Proje kurulumuna geçmeden önce Docker ve Docker compose yapısının kurulu olduğundan emin olun.
+## Gereksinimler
 
-# Dosya Yapısı
-Kurulum için bir elk klasörü oluşturun. Daha sonra klasör ieçrisine docker-compose.yml dosyasını oluşturun. Ardından elasticsearh, filebeat, kibana ve logstash klasörlerini oluşturun. her klasör içerisine config klasörlerini oluşturun. Sadece logstash klasörü içerisinde config ile beraber pipeline klasörü oluşturun. Her klasörde config kalsörleri içerisine elasticsearch.yml, filebeat.yml, logsatsh.yml, kibana.yml dosyalarını ekleyin. Logstashteki pipeline klasörü altına ise logstash.conf dosyasını ekleyin.
+Proje kurulumuna geçmeden önce **Docker** ve **Docker Compose** kurulumlarının tamamlanmış olduğundan emin olun.
 
+---
 
+## Dosya Yapısı
+
+Kurulum için bir `elk` klasörü oluşturun. Daha sonra klasör içerisine `docker-compose.yml` dosyasını oluşturun. Ardından aşağıdaki yapıya uygun olarak klasörleri ve yapılandırma dosyalarını ekleyin:
+
+```
 elk
-  | docker-compose.yaml
+  | docker-compose.yml
   | elasticsearch
                 | config
                         | elasticsearch.yml
@@ -23,10 +27,15 @@ elk
                     | logstash.yml
            | pipeline
                     | logstash.conf
+```
 
+---
 
-#Docker-compose.yaml
+## Docker Compose Yapılandırması
 
+`docker-compose.yml` dosyasını şu şekilde oluşturun:
+
+```yaml
 version: '3.8'
 services:
   elasticsearch:
@@ -94,22 +103,22 @@ volumes:
 networks:
   elk:
     driver: bridge
+```
 
+---
 
+## Yapılandırma Dosyaları
 
+### Elasticsearch Yapılandırması (`elasticsearch.yml`)
 
-
-
-
-#elasticsearch.yml
-
+```yaml
 cluster.name: "elasticsearch"
 network.host: localhost
+```
 
+### Filebeat Yapılandırması (`filebeat.yml`)
 
-
-#filebeat.yml
-
+```yaml
 filebeat.inputs:
   - type: log
     enabled: true
@@ -122,19 +131,26 @@ output.logstash:
 
 setup.kibana:
   host: "kibana:5601"
+```
 
-#kibana.yml
+### Kibana Yapılandırması (`kibana.yml`)
 
+```yaml
 server.name: kibana
 server.host: 0.0.0.0
 elasticsearch.hosts: [ http://elasticsearch:9200 ]
+```
 
-#logstash.yml
+### Logstash Yapılandırması (`logstash.yml`)
+
+```yaml
 http.host: 0.0.0.0
 xpack.monitoring.elasticsearch.hosts: ["http://elasticsearch:9200"]
+```
 
-#logstash.conf
+### Logstash Pipeline Yapılandırması (`logstash.conf`)
 
+```plaintext
 input {
   beats {
     port => 5044
@@ -151,7 +167,32 @@ output {
     index => "logstash-%{+YYYY.MM.dd}"
   }
 }
+```
 
+---
 
+## Kurulum Adımları
 
+1. `elk` klasörüne yukarıdaki dosya ve klasörleri ekleyin.
+2. Terminalde `elk` klasörüne gidin.
+3. Aşağıdaki komutu çalıştırarak servisleri başlatın:
 
+   ```bash
+   docker-compose up -d
+   ```
+
+4. Tüm servislerin çalıştığını doğrulamak için aşağıdaki komutları kullanabilirsiniz:
+
+   ```bash
+   docker ps
+   ```
+
+5. Kibana'ya tarayıcı üzerinden erişmek için şu URL'yi kullanın:
+
+   ```
+   http://localhost:5601
+   ```
+
+---
+
+Bu adımları izleyerek ELK Stack'inizi başarıyla kurabilirsiniz!
