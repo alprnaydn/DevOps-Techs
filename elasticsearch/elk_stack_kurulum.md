@@ -212,6 +212,9 @@ filebeat.yml:
     output.logstash:
       hosts: ["<logstash_host>:5044"]  # Logstash'in çalıştığı host ve port
 
+    setup.kibana:
+      host: "kibana:5601"
+
    ```
 logstash.conf:
    ```
