@@ -195,4 +195,4 @@ output {
 
 ---
 
-Bu adımları izleyerek ELK Stack'inizi başarıyla kurabilirsiniz!
+Bu adımları izleyerek ELK Stack yapısını başarıyla kurabilirsiniz!
