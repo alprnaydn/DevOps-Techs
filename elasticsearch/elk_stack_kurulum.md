@@ -195,4 +195,54 @@ output {
 
 ---
 
-Bu adımları izleyerek ELK Stack yapısını başarıyla kurabilirsiniz!
+## Belirli Bir Konteynır Loglarını Toplama
+Eğer tüm logları toplamak yerine belirli bir konteynırın loglarını toplamak istersek bunun için bir takım düzenlemeler yapmamız gerekir.
+
+filebeat.yml:
+   ```
+   filebeat.inputs:
+  - type: container
+    enabled: true
+    paths:
+      - /var/lib/docker/containers/containerId/*.log # ContainerId kısmını loglarını toplamak istediğiniz konteynırın id'si ile değiştirin
+    processors:
+      - add_docker_metadata:
+          host: "unix:///var/run/docker.sock"
+
+    output.logstash:
+      hosts: ["<logstash_host>:5044"]  # Logstash'in çalıştığı host ve port
+
+   ```
+logstash.conf:
+   ```
+   input {
+      beats {
+        port => 5044
+      }
+    }
+    
+    filter {
+      
+      if [container][name] == "${container_name}" {  # Sadece ${container_name} container'ını filtrele. ${container_name} kısmını loglarını toplayacağınız konteynırın adı ile değiştirin. 
+        mutate {
+          add_field => { "app" => "${container_name}" }
+        }
+      }
+    }
+    
+    output {
+      elasticsearch {
+        hosts => ["<elasticsearch_host>:9200"]  # Elasticsearch'in çalıştığı host ve port
+        index => "${container_name}-logs-%{+yyyy.MM.dd}"   # ${container_name} kısmını loglarını toplayacağınız konteynırın adı ile değiştirin. 
+      }
+      stdout {
+        codec => rubydebug
+      }
+    }
+
+
+   ```
+
+
+
+Bu adımları izleyerek tüm logları veya belirli bir konteynır loglarını toplamak için ELK Stack yapısını başarıyla kurabilirsiniz!
