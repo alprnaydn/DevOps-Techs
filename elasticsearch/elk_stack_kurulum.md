@@ -195,7 +195,7 @@ output {
 
 ---
 
-## Belirli Bir Konteynır Loglarını Toplama
+## Belirli Bir Konteynırın Loglarını Toplama
 Eğer tüm logları toplamak yerine belirli bir konteynırın loglarını toplamak istersek bunun için bir takım düzenlemeler yapmamız gerekir.
 ContainerId'yi **/var/lib/docker/containers** altında oluşturulan klasör adları ile aynı olacak şekilde yazın. Kısaltılmış id kullanımında log toplama işlemi başarısız olacaktır. 
 
