@@ -1,2 +1,2 @@
-# DevOPs-Techs-Setups
-I create setup files for DevOps technologies. 
+# DevOPs-Techs
+I create setup and explanation files for DevOps technologies. 
