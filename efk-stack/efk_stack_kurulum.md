@@ -153,7 +153,7 @@ services:
 Eğer docker container run komutu ile konteynır çalıştırıyorsak aşağıdaki komutu kullanabiliriz.
 
 ```bash
-   docker compose up -d  --log-driver=fluentd   --log-opt tag="{{.Name}}-logs"   --name ${container-name} ${image-name}
+   docker container run -d  --log-driver=fluentd   --log-opt tag="{{.Name}}-logs"   --name ${container-name} ${image-name}
 ```
 
 
