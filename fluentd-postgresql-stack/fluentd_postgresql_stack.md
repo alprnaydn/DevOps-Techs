@@ -179,8 +179,19 @@ CREATE TABLE your_table_name (
 
 PostgreSQL veritabanına bağlanmak için aşağıdaki komutu kullanabilirsiniz:
 
-
+```bash
 docker exec -it <Container_Adı> psql -d <Database_Adı> -U <Kullanıcı_Adı>
+```
+
+PostgreSQL'e bağlandıktan sonra aşağıdaki komut yapısı ile tablonuzu kontrol edip içerisindeki datayı çekebilirsiniz:
+
+```bash
+\dt
+```
+```sql
+SELECT * FROM your_table_name
+```
+
 
 ## Katkıda Bulunma
 
