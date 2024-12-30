@@ -78,7 +78,7 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
-        tag: you-app-tag
+        tag: your-app-tag
 
 networks:
   postgres:
@@ -184,4 +184,4 @@ docker exec -it <Container_Adı> psql -d <Database_Adı> -U <Kullanıcı_Adı>
 
 ## Katkıda Bulunma
 
-Katkılarınızı bekliyoruz! Lütfen bir sorun varsa veya özellik isteğiniz varsa belirtiniz.
+Katkılarınızı bekliyoruz! Lütfen bir sorunuz veya isteğiniz bir özellik varsa belirtiniz.
