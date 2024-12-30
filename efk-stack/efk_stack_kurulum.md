@@ -5,7 +5,8 @@ Bu kurulumda belirli bir konteynır üzerinden fluentd ile log toplayıp bunun e
 
 ## Gereksinimler
 
-Proje kurulumuna geçmeden önce **Docker** ve **Docker Compose** kurulumlarının tamamlanmış olduğundan emin olun.
+- Docker
+- Docker Compose
 
 ---
 
