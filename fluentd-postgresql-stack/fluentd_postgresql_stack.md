@@ -372,4 +372,4 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fluentd_user;
 
 ## Katkıda Bulunma
 
-Katkılarınızı bekliyoruz! Lütfen bir sorunuz veya isteğiniz bir özellik varsa belirtiniz.
+Katkılarınızı bekliyoruz! Lütfen bir sorunuz veya istediğiniz bir özellik varsa belirtiniz.
