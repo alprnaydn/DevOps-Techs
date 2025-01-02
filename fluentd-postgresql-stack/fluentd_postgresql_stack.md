@@ -53,7 +53,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_DB: your_database_name
-      POSTGRES_USER: your_username
+      POSTGRES_USER: your_postgres_username
       POSTGRES_PASSWORD: your_password
     ports:
       - "5432:5432"
@@ -63,7 +63,7 @@ services:
     networks:
       - postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U your_username -d your_database_name"]
+      test: ["CMD-SHELL", "pg_isready -U your_postgres_username -d your_database_name"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -130,7 +130,7 @@ fluentd.conf dosyasını oluşturun ve aşağıdaki içeriği ekleyin. fluentd.c
   host postgres
   port 5432
   database your_daatabase_name
-  username your_username
+  username your_postgres_username
   password your_password
   adapter postgresql
   <table>
@@ -156,7 +156,7 @@ fluentd.conf dosyasını oluşturun ve aşağıdaki içeriği ekleyin. fluentd.c
 init.sql dosyasını oluşturun ve aşağıdaki içeriği ekleyin. init.sql dosyası postgresql veritabanınızda tablo oluşturmayı sağlar.
 
 ```sql
-SET ROLE fluentd_user;
+SET ROLE your_postgres_username;
 
 DROP TABLE IF EXISTS your_table_1;
 CREATE TABLE your_table_1 (
@@ -168,9 +168,9 @@ CREATE TABLE your_table_1 (
   "timestamp" TIMESTAMP
 );
 
--- Grant permissions
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fluentd_user;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fluentd_user;
+-- Grant permissions(Kullanmadan önce vermek istediğiniz izinleri kontrol edin.)
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO your_postgres_username;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO your_postgres_username;
 ```
 
 ## Kullanım
@@ -228,7 +228,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_DB: your_database_name
-      POSTGRES_USER: your_username
+      POSTGRES_USER: your_postgres_username
       POSTGRES_PASSWORD: your_password
     ports:
       - "5432:5432"
@@ -238,7 +238,7 @@ services:
     networks:
       - postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U your_username -d your_database_name"]
+      test: ["CMD-SHELL", "pg_isready -U your_postgres_username -d your_database_name"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -280,7 +280,7 @@ volumes:
 ### init.sql 
 
 ```sql
-SET ROLE fluentd_user;
+SET ROLE your_postgres_username;
 
 DROP TABLE IF EXISTS your_table_1;
 CREATE TABLE your_table_1 (
@@ -313,9 +313,9 @@ CREATE TABLE your_table_3 (
   timestamp TIMESTAMP
 );
 
--- Grant permissions
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fluentd_user;
-GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fluentd_user;
+-- Grant permissions(Kullanmadan önce vermek istediğiniz izinleri kontrol edin.)
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO your_postgres_username;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO your_postgres_username;
 
 ```
 
@@ -340,7 +340,7 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fluentd_user;
   host postgres
   port 5432
   database your_daatabase_name
-  username your_username
+  username your_postgres_username
   password your_password
   adapter postgresql
   <table your-tag-1>
