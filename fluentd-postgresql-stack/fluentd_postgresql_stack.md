@@ -1,6 +1,6 @@
-# Fluentd ve PostgreSQL ile Veri Toplama ve Depolama
+# Fluentd ve PostgreSQL ile Log Toplama ve Depolama
 
-Bu dosyamızda fluentd ve postgresql kullanarak belirli bir konteynır için veri toplama ve depolama işlemlerini gerçekleştireceğiz.
+Bu dosyamızda fluentd ve postgresql kullanarak belirli bir konteynır için log toplama ve depolama işlemlerini gerçekleştireceğiz.
 
 ## Gereksinimler
 
