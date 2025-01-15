@@ -314,7 +314,6 @@ CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
 
 SET ROLE fluentd_user;
 
--- ID değerleri random olarak atanıyor. Bunu düzeltmek gerekiyor.
 DROP TABLE IF EXISTS your_table_1;
 CREATE TABLE your_table_1 (
   id SERIAL,
