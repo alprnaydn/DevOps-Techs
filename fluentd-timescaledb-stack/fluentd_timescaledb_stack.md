@@ -188,7 +188,8 @@ SELECT create_hypertable('your_table_name', 'timestamp',chunk_time_interval => I
 SELECT add_retention_policy('your_table_name', 
     INTERVAL '3 months',
     if_not_exists => true,
-    schedule_interval => INTERVAL '1 week'
+    schedule_interval => INTERVAL '1 week',
+    initial_start => date_trunc('day', now()) + INTERVAL '25 hours'
 );
 
 
@@ -358,19 +359,22 @@ SELECT create_hypertable('your_table_3', 'timestamp',chunk_time_interval => INTE
 SELECT add_retention_policy('your_table_1', 
     INTERVAL '3 months',
     if_not_exists => true,
-    schedule_interval => INTERVAL '1 week'
+    schedule_interval => INTERVAL '1 week',
+    initial_start => date_trunc('day', now()) + INTERVAL '25 hours'
 );
 
 SELECT add_retention_policy('your_table_2', 
     INTERVAL '3 months',
     if_not_exists => true,
-    schedule_interval => INTERVAL '1 week'
+    schedule_interval => INTERVAL '1 week',
+    initial_start => date_trunc('day', now()) + INTERVAL '25 hours'
 );
 
 SELECT add_retention_policy('your_table_3', 
     INTERVAL '3 months',
     if_not_exists => true,
-    schedule_interval => INTERVAL '1 week'
+    schedule_interval => INTERVAL '1 week',
+    initial_start => date_trunc('day', now()) + INTERVAL '25 hours'
 );
 
 
