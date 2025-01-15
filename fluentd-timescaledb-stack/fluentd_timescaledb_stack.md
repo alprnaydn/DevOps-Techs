@@ -164,7 +164,8 @@ fluentd.conf dosyasını oluşturun ve aşağıdaki içeriği ekleyin. fluentd.c
 init.sql dosyasını oluşturun ve aşağıdaki içeriği ekleyin. init.sql dosyası timescaledb veritabanınızda tablo oluşturmayı sağlar.
 
 ```sql
- 
+CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+
 SET ROLE fluentd_user;
 
 DROP TABLE IF EXISTS your_table_name;
@@ -176,9 +177,19 @@ CREATE TABLE your_table_name (
   message TEXT,
   timestamp TIMESTAMP PRIMARY KEY
 );
-SELECT create_hypertable('your_table_name', 'timestamp');
+-- BU fonksiyon ile 1 haftalık chunk'lar oluşturulacak.
+SELECT create_hypertable('your_table_name', 'timestamp',chunk_time_interval => INTERVAL '1 week');
 
-SELECT add_retention_policy('your_table_name', drop_after => INTERVAL '3 months');
+-- Yapı şöyle olacak:
+-- 1- Tabloyu 1 haftalık chunk'lar halinde saklayacağım.
+-- 2- 3 ayı dolduran datalar silinecek.
+-- 3- Silme işlemleri gibi fonksiyonlar günde 1 defa ve verilerin silinmesinin kullanıcıları etkilemeyeceği bir saatte yapılacak.
+
+SELECT add_retention_policy('your_table_name', 
+    INTERVAL '3 months',
+    if_not_exists => true,
+    schedule_interval => INTERVAL '1 week'
+);
 
 
 
@@ -186,6 +197,8 @@ SELECT add_retention_policy('your_table_name', drop_after => INTERVAL '3 months'
 -- Grant permissions
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fluentd_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fluentd_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA _timescaledb_functions TO fluentd_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA _timescaledb_internal TO fluentd_user;
 
 ```
 
@@ -296,7 +309,8 @@ volumes:
 ### init.sql 
 
 ```sql
--- Şuanda id özelliğini devre dışı bıraktım. Id leri ayarlamayı yapamadım. 
+CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+
 SET ROLE fluentd_user;
 
 -- ID değerleri random olarak atanıyor. Bunu düzeltmek gerekiyor.
@@ -309,7 +323,7 @@ CREATE TABLE your_table_1 (
   message TEXT,
   timestamp TIMESTAMP PRIMARY KEY
 );
-SELECT create_hypertable('your_table_1', 'timestamp');
+SELECT create_hypertable('your_table_1', 'timestamp',chunk_time_interval => INTERVAL '1 week');
 
 DROP TABLE IF EXISTS your_table_2;
 CREATE TABLE your_table_2 (
@@ -320,7 +334,7 @@ CREATE TABLE your_table_2 (
   message TEXT,
   timestamp TIMESTAMP PRIMARY KEY
 );
-SELECT create_hypertable('your_table_2', 'timestamp');
+SELECT create_hypertable('your_table_2', 'timestamp',chunk_time_interval => INTERVAL '1 week');
 
 
 
@@ -333,18 +347,41 @@ CREATE TABLE your_table_3 (
   message TEXT,
   timestamp TIMESTAMP PRIMARY KEY
 );
-SELECT create_hypertable('your_table_3', 'timestamp');
-
-SELECT add_retention_policy('your_table_1', drop_after => INTERVAL '3 months');
-SELECT add_retention_policy('your_table_2', drop_after => INTERVAL '3 months');
-SELECT add_retention_policy('your_table_3', drop_after => INTERVAL '3 months');
+SELECT create_hypertable('your_table_3', 'timestamp',chunk_time_interval => INTERVAL '1 week');
 
 
+-- Yapı şöyle olacak:
+-- 1- Tabloyu 1 haftalık chunk'lar halinde saklayacağım.
+-- 2- 3 ayı dolduran datalar silinecek.
+-- 3- Silme işlemleri gibi fonksiyonlar günde 1 defa ve verilerin silinmesinin kullanıcıları etkilemeyeceği bir saatte yapılacak.
+
+SELECT add_retention_policy('your_table_1', 
+    INTERVAL '3 months',
+    if_not_exists => true,
+    schedule_interval => INTERVAL '1 week'
+);
+
+SELECT add_retention_policy('your_table_2', 
+    INTERVAL '3 months',
+    if_not_exists => true,
+    schedule_interval => INTERVAL '1 week'
+);
+
+SELECT add_retention_policy('your_table_3', 
+    INTERVAL '3 months',
+    if_not_exists => true,
+    schedule_interval => INTERVAL '1 week'
+);
 
 
+
+-- Lütfen verdiğiniz izinleri kontrol edin.
 -- Grant permissions
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fluentd_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO fluentd_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA _timescaledb_functions TO fluentd_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA _timescaledb_internal TO fluentd_user;
+
 ```
 
 ### fluent.conf
