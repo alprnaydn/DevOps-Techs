@@ -99,11 +99,27 @@ fluent image dosyasının oluşturulması için Dockerfile dosyasını oluşturu
 FROM fluent/fluentd:v1.14-1
 
 USER root
-RUN apt-get update && \
-    apt-get install -y curl netcat-openbsd && \
+
+RUN apk add --no-cache \
+    build-base \
+    ruby-dev \
+    postgresql-dev \
+    postgresql-client \
+    curl \
+    netcat-openbsd
+
+RUN gem install bundler -v 2.4.22 && \
+    gem install rake -v 13.0.6 && \
+    gem install zeitwerk -v 2.6.18 && \
+    gem install pg -v '~> 1.1' --no-document && \
     gem install fluent-plugin-sql && \
-    gem install fluent-plugin-prometheus
+    gem install activerecord -v '~> 6.1'
+
+
+RUN apk del build-base ruby-dev
+
 USER fluent
+
 
 ```
 
