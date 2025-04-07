@@ -22,7 +22,7 @@
 * Barman erişimi için ve kullanımı için postgresql üzerinde user oluşturmalıyız.
 
 ```sql
-    CREATE USER barman WITH SUPERUSER PASSWORD '123456';
+    CREATE USER barman WITH SUPERUSER PASSWORD 'your-password';
     GRANT USAGE ON SCHEMA pg_catalog TO barman;
     GRANT EXECUTE ON FUNCTION pg_catalog.current_setting(text) TO barman;
     GRANT EXECUTE ON FUNCTION pg_catalog.set_config(text, text, boolean) TO barman;
