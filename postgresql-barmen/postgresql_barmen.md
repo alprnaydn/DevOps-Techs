@@ -188,6 +188,14 @@
     sudo barman backup postgresql
 ```
 
+## Alınan Backupları Listeleme (2)
+
+* Almış olduğumuz backupları aşağıdaki komut ile listeleyebiliriz.
+
+```bash
+    sudo barman list-backup postgresql
+```
+
 ## Backuptan Geri Yükleme (2)
 
 * Backuptan postgresql e geri veri yüklemek için şu komutu çalıştır:
