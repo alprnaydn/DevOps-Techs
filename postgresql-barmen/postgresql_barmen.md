@@ -1,6 +1,6 @@
 # Postgresql ve Barman ile Veri Yedekleme 
 
-* 2 adet sanal makine üzerinde kurulumu gerçekleştireceğim. İlk sanal makinede postgresql, ikincide barman kurulumu olacak. O anki aşamanın hangi sanala makinede olacağı parantez içinde verilecek.
+* 2 adet sanal makine üzerinde kurulumu gerçekleştireceğim. İlk sanal makinede postgresql, ikincide barman kurulumu olacak. O anki aşamanın hangi sanal makinede olacağı parantez içinde verilecek.
 
 * 1 = postgresql
 * 2 = barman
