@@ -7,7 +7,30 @@
 
 ## Genel Şema
 
-* ``` +----------------------+ +----------------------+ | | | | | PostgreSQL Server | | Barman Server | | (postgres) | | (barman) | | | | | +----------+-----------+ +-----------+----------+ | | | | | SSH: postgres → barman (Yedekleme için) | | archive_command: rsync ile WAL dosyaları gönderir | +-------------------------------------------------->| | | | | | SSH: barman → postgres (Geri yükleme için) | | barman recover sırasında rsync ile dosyaları kopyalar| |<--------------------------------------------------+ | | +----------+-----------+ +-----------+----------+ | | | | | postgresql.conf | | /etc/barman.d/ | | pg_hba.conf | | postgresql.conf | | | | | +----------------------+ +----------------------+ ``` 
+* +----------------------+                   +----------------------+
+|                      |                   |                      |
+|   PostgreSQL Server   |                   |     Barman Server    |
+|      (postgres)       |                   |      (barman)        |
+|                      |                   |                      |
++----------+-----------+                   +-----------+----------+
+           |                                                   |
+           |                                                   |
+           | SSH: postgres → barman (Yedekleme için)           |
+           | archive_command: rsync ile WAL dosyaları gönderir |
+           +-------------------------------------------------->|
+           |                                                   |
+           |                                                   |
+           | SSH: barman → postgres (Geri yükleme için)         |
+           | barman recover sırasında rsync ile dosyaları kopyalar|
+           |<--------------------------------------------------+
+           |                                                   |
++----------+-----------+                   +-----------+----------+
+|                      |                   |                      |
+|  postgresql.conf     |                   |  /etc/barman.d/      |
+|  pg_hba.conf         |                   |  postgresql.conf     |
+|                      |                   |                      |
++----------------------+                   +----------------------+
+
 
 ## Postgresql Kurulumu (1)
 
