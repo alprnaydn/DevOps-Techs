@@ -116,6 +116,12 @@
     sudo apt install barman
 ```
 
+## PostgreSQL Client Kurulumu (2)
+* Barman üzerinde postgresql client kuruyoruz.
+```bash
+sudo apt update
+sudo apt install postgresql-client
+```
 
 ## Barman Üzerinde Konfigürasyon Dosyalarının Güncellenmesi (2)
 
