@@ -22,7 +22,7 @@
 * Barman erişimi için ve kullanımı için postgresql üzerinde user oluşturmalıyız.
 
 ```sql
-    CREATE USER barman WITH SUPERUSER PASSWORD 'your-password';
+    CREATE ROLE barman WITH LOGIN REPLICATION PASSWORD 'your-password';
     GRANT USAGE ON SCHEMA pg_catalog TO barman;
     GRANT EXECUTE ON FUNCTION pg_catalog.current_setting(text) TO barman;
     GRANT EXECUTE ON FUNCTION pg_catalog.set_config(text, text, boolean) TO barman;
@@ -79,14 +79,6 @@
     sudo chmod -R 700 /var/lib/postgresql/<postgresql-version>/main
  ```
 
-## Postgresql Kurulumu (2)
-
-* Verilerimizi saklamak için postgresql kurulumu gerçekleştiriyoruz.
-
-```bash
-    sudo apt update
-    sudo apt install postgresql postgresql-contrib
-```
 
 ## Barman Kurulumu (2)
 
