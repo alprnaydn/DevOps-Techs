@@ -5,6 +5,10 @@
 * 1 = postgresql
 * 2 = barman
 
+## Genel Şema
+
+* <pre> ``` +----------------------+ +----------------------+ | | | | | PostgreSQL Server | | Barman Server | | (postgres) | | (barman) | | | | | +----------+-----------+ +-----------+----------+ | | | | | SSH: postgres → barman (Yedekleme için) | | archive_command: rsync ile WAL dosyaları gönderir | +-------------------------------------------------->| | | | | | SSH: barman → postgres (Geri yükleme için) | | barman recover sırasında rsync ile dosyaları kopyalar| |<--------------------------------------------------+ | | +----------+-----------+ +-----------+----------+ | | | | | postgresql.conf | | /etc/barman.d/ | | pg_hba.conf | | postgresql.conf | | | | | +----------------------+ +----------------------+ ``` </pre>
+
 ## Postgresql Kurulumu (1)
 
 * Verilerimizi saklamak için postgresql kurulumu gerçekleştiriyoruz.
