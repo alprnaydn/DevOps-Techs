@@ -6,8 +6,8 @@
 * 2 = barman
 
 ## Genel Şema
-
-* +----------------------+                   +----------------------+
+```
+ +----------------------+                   +----------------------+
 |                      |                   |                      |
 |   PostgreSQL Server   |                   |     Barman Server    |
 |      (postgres)       |                   |      (barman)        |
@@ -30,7 +30,7 @@
 |  pg_hba.conf         |                   |  postgresql.conf     |
 |                      |                   |                      |
 +----------------------+                   +----------------------+
-
+```
 
 ## Postgresql Kurulumu (1)
 
