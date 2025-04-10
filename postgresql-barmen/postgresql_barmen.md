@@ -199,7 +199,7 @@
 ```bash
     sudo barman recover --remote-ssh-command "ssh postgres@<Postgresql-server-ip>" postgresql <backup-direktory-name> /var/lib/postgresql/<postgresql-version>/main
 ```
-* Bundan sonra POstgreSQL servisinde postgresql servisini başlat.
+* Bundan sonra PostgreSQL makinesinde postgresql servisini başlat.
 ```bash
      sudo systemctl start postgresql
 ```
