@@ -92,15 +92,6 @@
 
 ## Barman Üzerinde Konfigürasyon Dosyalarının Güncellenmesi (2)
 
-* Barman makinesinde /etc/barman.conf dosyasına şu eklemeyi yapmalıyız:
-
-```conf
-    [postgresql]
-    description =  "PostgreSQL Sunucusu"
-    conninfo = host=<Postgresql-server-ip> user=postgres password=<Postgresql-server-password> dbname=postgres
-    backup_method = rsync
-```
-
 * Barman makinesinde /etc/barman.d/postgresql dosyası yoksa oluşturup varsa direkt şu eklemeyi yap:
 
 ```conf
@@ -114,18 +105,7 @@
 
 ```
 
-* Barman makinesinde /etc/barman.d/pg.conf dosyasına şu eklemeyi yap:
 
-```conf
-    [postgresql]
-    description = "PostgreSQL Server"
-    conninfo = host=<Postgresql-server-ip> user=barman dbname=postgres password=<barman-user-password>
-    streaming_conninfo = host=<Postgresql-server-ip> user=barman dbname=postgres password=<barman-user-password>
-    backup_method = rsync
-    ssh_command = ssh postgres@<Postgresql-server-ip>
-    archiver = on
-
-```
 
 ## SSH Bağlantısını Sağlama
 
