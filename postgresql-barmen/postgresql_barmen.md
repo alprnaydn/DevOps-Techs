@@ -44,11 +44,6 @@
 
 * etc/postgresql/{postgresql_version}/main/postgresql.conf
 ```conf
-    #------------------------------------------------------------------------------
-# CONNECTIONS AND AUTHENTICATION
-#------------------------------------------------------------------------------
-
-# - Connection Settings -
 
     listen_addresses = '*'                                                    
     archive_mode = on
@@ -77,7 +72,7 @@
 
 ## Dosyalara erişim için gerekli izinleri vermek (1)
 
-* Barman tarafında dosyalara erişim sağlanamsı için postgresql dosylarının konumlarına gerkli izinleri vermeliyiz.
+* Barman tarafında dosyalara erişim sağlanması için postgresql dosyalarının konumlarına gerekli izinleri vermeliyiz.
 
  ```bash
     sudo chown -R postgres:postgres /var/lib/postgresql/<postgresql-version>/main
@@ -103,14 +98,14 @@
 ```
 
 
-## Barman Üzerinde Konfigürason Dosyalarının Güncellenmesi (2)
+## Barman Üzerinde Konfigürasyon Dosyalarının Güncellenmesi (2)
 
-* Barman makinesinde /etc/barman.conf dosyasında şu eklemeyi yapmalıyız:
+* Barman makinesinde /etc/barman.conf dosyasına şu eklemeyi yapmalıyız:
 
 ```conf
     [postgresql]
     description =  "PostgreSQL Sunucusu"
-    conninfo = host=<Postgresql-server-ip> user=postgres password=123456 dbname=postgres
+    conninfo = host=<Postgresql-server-ip> user=postgres password=<Postgresql-server-password> dbname=postgres
     backup_method = rsync
 ```
 
@@ -203,5 +198,5 @@
 * Alınan backuptan geri veri yüklemek için aşağıdaki komutu çalıştır. Backup-directory-name e /var/lib/barman/postgresql/base altındaki klaösrden erişebilirsin. Klasör adları = backup adı
 
 ```bash
-    sudo barman recover --remote-ssh-command "ssh postgres@<POstgresql-server-ip>" postgresql <backup-direktory-name> /var/lib/postgresql/<postgresql-version>/main
+    sudo barman recover --remote-ssh-command "ssh postgres@<Postgresql-server-ip>" postgresql <backup-direktory-name> /var/lib/postgresql/<postgresql-version>/main
 ```
